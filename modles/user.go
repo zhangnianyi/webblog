@@ -83,3 +83,21 @@ func ScryptPw(password string)string{
 	return FPW
 }
 
+
+//登录
+func CheckLogin(username string,password string)int{
+	user :=new(User)
+	DB.Where("username =?",username).First(user)
+	if user.ID ==0{
+		 return errormessage.ERROR_USER_NOTEXIST
+	}
+	if ScryptPw(password) !=user.Password{
+	return  errormessage.ERROR_PASSWORD_WRONG
+	}
+	if user.Role !=0{
+		return  errormessage.ERROR_USER_NO_RIGHT
+	}
+	return  errormessage.SUCCESS
+
+
+}
