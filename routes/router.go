@@ -9,7 +9,11 @@ import (
 
 func InitRouter()   {
 	gin.SetMode(utils.AppMode)
-	r :=gin.Default()
+
+	//想要自己自定义日志差劲
+	r :=gin.New()
+	r.Use(middleware.Logger())
+	r.Use(gin.Recovery())
 	auth := r.Group("api/v1")
 	auth.Use(middleware.Jwttoken())
 	{
