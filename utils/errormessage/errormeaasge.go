@@ -3,6 +3,7 @@ package errormessage
 const (
 	SUCCESS= 200
 	ERROR = 500
+	ERROR_DATA_NOEXIST =50000
 	//CODE =1000 用户模块的错误
 	ERROR_USERNAME_USE =1001
 	ERROR_PASSWORD_WRONG=1002
@@ -26,6 +27,7 @@ var codemsg=map[int]string{
 	ERROR_TOKEN_RUNTIME: "token 超时了",
 	ERROR_TOKEN_WRONG : "token错误",
 	ERROR_TOKEN_TYPR_ERONG: "token格式错误",
+	ERROR_DATA_NOEXIST:"数据库中数据不存在",
 }
 
 func GetErrorMessage(code int )string{

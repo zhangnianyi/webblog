@@ -25,7 +25,7 @@ func InitDb(){
 		return
 	}
 	DB.AutoMigrate(&User{},&Artucle{},&Category{})
-	DB.SingularTable(true)
+	//DB.SingularTable(true)
 	DB.DB().SetMaxIdleConns(10)
 	DB.DB().SetMaxOpenConns(100)
 	DB.DB().SetConnMaxLifetime(10*time.Second)

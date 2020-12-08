@@ -13,7 +13,7 @@ func InitRouter()   {
 	{
 		//user模块的路由接口
 		router.POST("/user/add",v1.Adduser)
-		router.GET("/users",v1.Getuser)
+		router.GET("/users",v1.Getusers)
 		router.PUT("/user/:id",v1.Edituser)
 		router.DELETE("/user/:id",v1.Deluser)
 
