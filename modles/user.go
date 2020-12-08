@@ -1,8 +1,11 @@
 package modles
 
 import (
+	"encoding/base64"
 	"ginblog/utils/errormessage"
 	"github.com/jinzhu/gorm"
+	"golang.org/x/crypto/scrypt"
+	"log"
 )
 
 type User struct {
@@ -23,6 +26,7 @@ func Checkuser(name string)int{
 
 //新增用户
 func CreateUser(data *User)int{
+	data.Password=ScryptPw(data.Password)
 	err := DB.Create(&data).Error
 	if err != nil {
 		return  errormessage.ERROR
@@ -40,6 +44,25 @@ func Getusers(pagesize int,pagenum int)[]*User{
 
 }
 func Edituser(id int){
+
+}
+
+
+//密码加密
+func ScryptPw(password string)string{
+	const   (
+		Keylen =8
+	)
+	salt :=make([]byte,8)
+	salt = []byte{4,56,32,65,132,131,22,21}
+	Hashpwd,err :=scrypt.Key([]byte(password),salt,16384,8,1,Keylen)
+	if err !=nil{
+		log.Fatal(errormessage.ERROR)
+	}
+	FPW :=base64.StdEncoding.EncodeToString(Hashpwd)
+	return FPW
+
+
 
 }
 
