@@ -10,7 +10,7 @@ import (
 
 func Login(c *gin.Context){
 	 data :=new(modles.User)
-	c.ShouldBindJSON(data)
+	 c.ShouldBindJSON(data)
 	 code=modles.CheckLogin(data.Username,data.Password)
 	 var token string
 	 if code == errormessage.SUCCESS{

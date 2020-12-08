@@ -14,6 +14,10 @@ DbPort string
 Dbuser   string
 Dbname   string
 Dbpwd   string
+AccessKey  string
+SecretKey  string
+Bucket  string
+QiniuServer  string
 )
 
 
@@ -25,6 +29,7 @@ func init(){
 	}
 	LoadData(file)
 	LoadData(file)
+	Loadqiniu(file)
 }
 func LoadServce(file *ini.File){
 	AppMode = file.Section("Server").Key("AppMode").MustString("debug")
@@ -42,4 +47,11 @@ func LoadData(file *ini.File){
 
 
 
+}
+
+func Loadqiniu(file *ini.File){
+	AccessKey   = file.Section("Qiniu").Key("AccessKey").String()
+	SecretKey   =  file.Section("Qiniu").Key("SecretKey").String()
+	Bucket   = file.Section("Qiniu").Key("Bucket").String()
+	QiniuServer  =file.Section("Qiniu").Key("QiniuServer").String()
 }
