@@ -2,6 +2,7 @@ package modles
 
 import (
 	"encoding/base64"
+	"fmt"
 	"ginblog/utils/errormessage"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/scrypt"
@@ -43,11 +44,30 @@ func Getusers(pagesize int,pagenum int)[]*User{
 	return  users
 
 }
-func Edituser(id int){
 
+func Deleteuser(id int)int{
+	var users User
+	err :=DB.Where("id = ?",id).Delete(&users).Error
+	if err!=nil{
+		fmt.Println(err)
+		return errormessage.ERROR
+	}
+	return errormessage.SUCCESS
 }
 
+func Edituser(id int,data *User) int{
+	user :=new(User)
+	var maps = make(map[string]interface{})
+	maps["username"] = data.Username
+	maps["role"] =data.Role
+	err :=DB.Model(user).Where("id = ?",id).Update(maps).Error
+	if err!=nil{
+		fmt.Println(err)
+		return errormessage.ERROR
+	}
+	return errormessage.SUCCESS
 
+}
 //密码加密
 func ScryptPw(password string)string{
 	const   (
@@ -61,8 +81,5 @@ func ScryptPw(password string)string{
 	}
 	FPW :=base64.StdEncoding.EncodeToString(Hashpwd)
 	return FPW
-
-
-
 }
 

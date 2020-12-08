@@ -49,9 +49,33 @@ func Getusers(c *gin.Context){
 	})
 
 }
-//编辑用户
-func Edituser(c *gin.Context){}
+
 //删除用户
 func Deluser(c *gin.Context){
+	id,_ :=strconv.Atoi(c.Param("id"))
+	code =modles.Deleteuser(id)
+	c.JSON(http.StatusOK,gin.H{
+		"STATUS":code,
+		"message":errormessage.GetErrorMessage(code),
+	})
+}
+//编辑用户
+func Edituser(c *gin.Context){
+
+	var data modles.User
+	id,_ :=strconv.Atoi(c.Param("id"))
+	c.ShouldBindJSON(&data )
+	code =modles.Checkuser(data.Username)
+	if code == errormessage.SUCCESS{
+		modles.Edituser(id,&data)
+	}
+	if code == errormessage.ERROR_USERNAME_USE{
+		c.Abort()
+	}
+	c.JSON(http.StatusOK,gin.H{
+		"STATUS":code,
+		"message":errormessage.GetErrorMessage(code),
+	})
+
 
 }

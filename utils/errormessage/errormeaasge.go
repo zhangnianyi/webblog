@@ -14,6 +14,8 @@ const (
 	ERROR_TOKEN_TYPR_ERONG=1007
 	//2000开头的错误 文章模块的错误
 	//3000开头的错误  分类模块的错误
+	ERROR_CATRNAME_USERD= 30001
+	ERROR_ART_NOTEXIST=2001
 )
 
 
@@ -28,6 +30,8 @@ var codemsg=map[int]string{
 	ERROR_TOKEN_WRONG : "token错误",
 	ERROR_TOKEN_TYPR_ERONG: "token格式错误",
 	ERROR_DATA_NOEXIST:"数据库中数据不存在",
+	ERROR_CATRNAME_USERD :"分类已经存在",
+	ERROR_ART_NOTEXIST:"文章不存在",
 }
 
 func GetErrorMessage(code int )string{
