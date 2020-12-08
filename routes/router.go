@@ -12,7 +12,7 @@ func InitRouter()   {
 
 	//想要自己自定义日志差劲
 	r :=gin.New()
-	r.Use(middleware.Logger())
+	r.Use(middleware.Log())
 	r.Use(gin.Recovery())
 	auth := r.Group("api/v1")
 	auth.Use(middleware.Jwttoken())
