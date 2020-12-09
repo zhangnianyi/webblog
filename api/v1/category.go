@@ -39,12 +39,13 @@ func GetCategory(c *gin.Context){
 	if pagenum ==0{
 		pagenum =-1
 	}
-	data :=modles.GetCategory(pagesize,pagenum)
+	data ,total:=modles.GetCategory(pagesize,pagenum)
 	code = errormessage.SUCCESS
 	c.JSON(http.StatusOK,gin.H{
 		"STATUS":code,
 		"data":data,
 		"message":errormessage.GetErrorMessage(code),
+		"total":total,
 	})
 
 }

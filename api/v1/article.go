@@ -31,11 +31,12 @@ func GetArtucle(c *gin.Context){
 	if pagenum ==0{
 		pagenum =-1
 	}
-	data,code :=modles.GetArtucle(pagesize,pagenum)
+	data,code,toal:=modles.GetArtucle(pagesize,pagenum)
 	c.JSON(http.StatusOK,gin.H{
 		"STATUS":code,
 		"data":data,
 		"message":errormessage.GetErrorMessage(code),
+		"total":toal,
 	})
 }
 
@@ -85,10 +86,11 @@ func GetcateArt(c *gin.Context){
 		pagenum =-1
 	}
 	id,_ :=strconv.Atoi(c.Param("id"))
-	data,code :=modles.GetArtbyCat(id,pagesize,pagesize)
+	data,code,total :=modles.GetArtbyCat(id,pagesize,pagesize)
 	c.JSON(http.StatusOK,gin.H{
 		"STATUS":code,
 		"data":data,
 		"message":errormessage.GetErrorMessage(code),
+		"total":total,
 	})
 }

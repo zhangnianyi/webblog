@@ -3,6 +3,7 @@ package v1
 import (
 	"ginblog/modles"
 	"ginblog/utils/errormessage"
+	"ginblog/utils/validator"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -12,7 +13,16 @@ var code int
 //添加用
 func Adduser(c *gin.Context){
 	data  :=new(modles.User)
+	var msg string
 	_ =c.ShouldBindJSON(data)
+	msg,code =validator.Validatroy(data)
+	if code !=errormessage.SUCCESS{
+		c.JSON(http.StatusOK,gin.H{
+			"status":code,
+			"message":msg,
+		})
+		return
+	}
 	code =modles.Checkuser(data.Username)
 	if code == errormessage.SUCCESS{
 		modles.CreateUser(data)
@@ -40,12 +50,13 @@ func Getusers(c *gin.Context){
 	if pagenum ==0{
 		pagenum =-1
 	}
-	data :=modles.Getusers(pagesize,pagenum)
+	data,total :=modles.Getusers(pagesize,pagenum)
 	code = errormessage.SUCCESS
 	c.JSON(http.StatusOK,gin.H{
 		"STATUS":code,
 		"data":data,
 		"message":errormessage.GetErrorMessage(code),
+		"total":total,
 	})
 
 }

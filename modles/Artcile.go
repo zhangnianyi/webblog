@@ -36,26 +36,28 @@ func GetArtinfobyid(id int)(Artucle,int){
 	return  art,errormessage.SUCCESS
 }
 //id是分类的id
-func GetArtbyCat(id int ,pagesize int,pagenum int)([]*Artucle,int){
+func GetArtbyCat(id int ,pagesize int,pagenum int)([]*Artucle,int,int){
 	//var CatArtList []Artucle
+	var total int
 	articleList :=make([]*Artucle,0,100)
-	err =DB.Preload("Category").Limit(pagesize).Offset((pagenum-1)*pagesize).Where("cid = ?",id).Find(&articleList).Error
+	err =DB.Preload("Category").Limit(pagesize).Offset((pagenum-1)*pagesize).Where("cid = ?",id).Find(&articleList).Count(&total).Error
 	if  err !=nil {
-		return nil,errormessage.ERROR_ART_NOTEXIST
+		return nil,errormessage.ERROR_ART_NOTEXIST,0
 	}
-	return articleList,errormessage.SUCCESS
+	return articleList,errormessage.SUCCESS,total
 }
 
 
 
-func GetArtucle(pagesize int,pagenum int)([]*Artucle,int){
+func GetArtucle(pagesize int,pagenum int)([]*Artucle,int,int){
 	articleList :=make([]*Artucle,0,100)
+	var total int
 	//var users []User
-	err =DB.Preload("Category").Limit(pagesize).Offset((pagenum-1)*pagesize).Find(&articleList).Error
+	err =DB.Preload("Category").Limit(pagesize).Offset((pagenum-1)*pagesize).Find(&articleList).Count(&total).Error
 	if  err !=nil &&err ==gorm.ErrRecordNotFound{
-		return  nil,errormessage.ERROR
+		return  nil,errormessage.ERROR,0
 	}
-	return  articleList,errormessage.SUCCESS
+	return  articleList,errormessage.SUCCESS,total
 
 }
 //查询单个文章 下次在做

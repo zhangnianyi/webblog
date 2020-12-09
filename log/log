@@ -1,4 +1,6 @@
-time="2020-12-08T23:30:59+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=192 HostName=nianyideMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v1/login SpendTime="73 ms" status=200
+time="2020-12-09T16:37:42+08:00" level=info Agent=PostmanRuntime/7.26.8 DataSize=2422 HostName=LAPTOP-LT6TKO5L Ip=127.0.0.1 Method=GET Path=/api/v1/artucles SpendTime="90 ms" status=200
+status=200
+ ms" status=200
 time="2020-12-08T23:30:25+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=192 HostName=nianyideMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v1/login SpendTime="120 ms" status=200
 /login
 time="2020-12-08T23:13:29+08:00" level=info Datasize=192 Hostname=nianyideMacBook-Pro.local IP=127.0.0.1 Speedtime="63 ms" Status=200 Useragent="ApiPOST Runtime +https://www.apipost.cn" method=POST path=/api/v1/login

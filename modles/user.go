@@ -11,9 +11,9 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"type:varchar(100);not null" json:"username"`
-	Password string  `gorm:"type:varchar(100);not null" json:"password"`
-	Role int  `gorm:"type:int" json:"role"`  //0是管理员 1是阅读者
+	Username string `gorm:"type:varchar(100);not null" json:"username" validata:"required,min=4,max=12"`
+	Password string  `gorm:"type:varchar(100);not null" json:"password" validata:"required,min=4,max=20`
+	Role int  `gorm:"type:int;DEFAULT:2" json:"role" validata:"required,get=2`  //0是管理员 1是阅读者
 }
 //查询用户是否存在
 func Checkuser(name string)int{
@@ -34,14 +34,15 @@ func CreateUser(data *User)int{
 	}
    return  errormessage.SUCCESS
 }
-func Getusers(pagesize int,pagenum int)[]*User{
+func Getusers(pagesize int,pagenum int)([]*User,int){
 	users :=make([]*User,0,100)
 	//var users []User
-	err =DB.Limit(pagesize).Offset((pagenum-1)*pagesize).Find(&users).Error
+	var total int
+	err =DB.Limit(pagesize).Offset((pagenum-1)*pagesize).Find(&users).Count(&total).Error
 	if  err !=nil &&err ==gorm.ErrRecordNotFound{
-		return  nil
+		return  nil,0
 	}
-	return  users
+	return  users,total
 
 }
 
@@ -94,7 +95,7 @@ func CheckLogin(username string,password string)int{
 	if ScryptPw(password) !=user.Password{
 	return  errormessage.ERROR_PASSWORD_WRONG
 	}
-	if user.Role !=0{
+	if user.Role !=1{
 		return  errormessage.ERROR_USER_NO_RIGHT
 	}
 	return  errormessage.SUCCESS

@@ -28,14 +28,15 @@ func CreateCategory(data *Category)int{
 	}
 	return  errormessage.SUCCESS
 }
-func GetCategory(pagesize int,pagenum int)[]*Category{
+func GetCategory(pagesize int,pagenum int)([]*Category,int){
 	cate :=make([]*Category,0,100)
 	//var users []User
-	err =DB.Limit(pagesize).Offset((pagenum-1)*pagesize).Find(&cate).Error
+	var total int
+	err =DB.Limit(pagesize).Offset((pagenum-1)*pagesize).Find(&cate).Count(&total).Error
 	if  err !=nil &&err ==gorm.ErrRecordNotFound{
-		return  nil
+		return  nil,0
 	}
-	return  cate
+	return  cate,total
 
 }
 
